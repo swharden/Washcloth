@@ -17,37 +17,50 @@ namespace Washcloth
         public static XElement GetMember(MethodInfo info) => BuildMemberXml(Meta.GetDocumentation(info));
         public static XElement GetParam(ParameterInfo info) => XElement.Parse(GetSummary(info));
 
-        public static string? GetSummary(Type type) => GetMemberSummary(GetMember(type));
-        public static string? GetSummary(ConstructorInfo info) => GetMemberSummary(GetMember(info));
-        public static string? GetSummary(PropertyInfo info) => GetMemberSummary(GetMember(info));
-        public static string? GetSummary(FieldInfo info) => GetMemberSummary(GetMember(info));
-        public static string? GetSummary(EventInfo info) => GetMemberSummary(GetMember(info));
-        public static string? GetSummary(MemberInfo info) => GetMemberSummary(GetMember(info));
-        public static string? GetSummary(MethodInfo info) => GetMemberSummary(GetMember(info));
-        public static string? GetSummary(ParameterInfo info) => Meta.GetDocumentation(info).xml;
+        public static string? GetSummary(Type type, bool collapse = true) =>
+            FormatSummary(GetMember(type).Element("summary")?.Value, collapse);
 
-        public static string GetSignature(Type type) => Signature.GetTypeSignature(type);
-        public static string GetSignature(MethodInfo info) => Signature.GetMethodSignature(info);
+        public static string? GetSummary(ConstructorInfo info, bool collapse = true) =>
+            FormatSummary(GetMember(info).Element("summary")?.Value, collapse);
+
+        public static string? GetSummary(PropertyInfo info, bool collapse = true) =>
+            FormatSummary(GetMember(info).Element("summary")?.Value, collapse);
+
+        public static string? GetSummary(FieldInfo info, bool collapse = true) =>
+            FormatSummary(GetMember(info).Element("summary")?.Value, collapse);
+
+        public static string? GetSummary(EventInfo info, bool collapse = true) =>
+            FormatSummary(GetMember(info).Element("summary")?.Value, collapse)
+            ;
+        public static string? GetSummary(MemberInfo info, bool collapse = true) =>
+            FormatSummary(GetMember(info).Element("summary")?.Value, collapse);
+
+        public static string? GetSummary(MethodInfo info, bool collapse = true) =>
+            FormatSummary(GetMember(info).Element("summary")?.Value, collapse);
+
+        public static string? GetSummary(ParameterInfo info, bool collapse = true) =>
+            FormatSummary(XElement.Parse(Meta.GetDocumentation(info).xml)?.Value, collapse);
+
+        private static string? FormatSummary(string? xml, bool collapse)
+        {
+            if (xml is null)
+                return null;
+
+            if (collapse == false)
+                return xml;
+
+            xml = xml.Replace('\n', ' ');
+            xml = xml.Replace('\r', ' ');
+            while (xml.Contains("  "))
+                xml = xml.Replace("  ", " ");
+            return xml.Trim();
+        }
 
         private static XElement BuildMemberXml((string key, string? xml) docs)
         {
             string xml = docs.xml ?? "";
             string memberXml = $"<member name='{docs.key}'>{xml}</member>";
             return XElement.Parse(memberXml);
-        }
-
-        private static string? GetMemberSummary(XElement memberElement)
-        {
-            var summaryElement = memberElement.Element("summary");
-            if (summaryElement is null)
-                return null;
-
-            string summary = summaryElement.Value;
-            summary = summary.Replace('\n', ' ');
-            summary = summary.Replace('\r', ' ');
-            while (summary.Contains("  "))
-                summary = summary.Replace("  ", " ");
-            return summary.Trim();
         }
     }
 }
