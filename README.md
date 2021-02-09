@@ -5,11 +5,34 @@
 
 **Washcloth is a .NET Standard library for reading XML code comments from inside running applications.** Comments in source code are used to display tooltip information in Visual Studio and can be automatically saved in XML files, but this documentation is not added into program assemblies so it is not available in compiled applications. Washcloth bridges this gap by reading the XML documentation file and combining its comments with program information found at runtime using reflection.
 
-**⚠️ Warning: Washcloth is early in its development.** Its API may change as it continues to evolve.
+**⚠️ Warning: Washcloth is early in development.** It is currently [major version zero](https://semver.org/#spec-item-4) and the public API should not be considered stable.
 
 ## Quickstart
 
-### Get XML Documentation
+### Add XML Comments to Code
+```cs
+public class MathClass
+{
+    /// <summary>Calculate area of a circle</summary>
+    /// <param name="r">radius</param>
+    /// <returns>area in original units squared</returns>
+    public double CircleArea(double r = 123) => Math.PI * r * r;
+}
+```
+
+### Generate XML Documentation
+
+Edit your csproj file to include the following:
+
+```xml
+<PropertyGroup>
+  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+</PropertyGroup>
+```
+
+💡 Define `GenerateDocumentationFile` instead of `DocumentationFile` to ensure the XML filename always matches the assembly name.
+
+### Read XML Documentation using C#
 
 ```cs
 MethodInfo info = typeof(MathClass).GetMethod("CircleArea");
@@ -20,15 +43,13 @@ Console.WriteLine(xml);
 
 ```
 <member name="M:Washcloth_Testing.MathClass.CircleArea(System.Double)">
-  <summary>
-    Calculate area of a circle
-  </summary>
-  <param name="radius">distance from center to an edge</param>
+  <summary>Calculate area of a circle</summary>
+  <param name="r">radius</param>
   <returns>area in original units squared</returns>
 </member>
 ```
 
-### Get Signature
+### Determine Signatures using C#
 
 ```cs
 MethodInfo info = typeof(MathClass).GetMethod("CircleArea");

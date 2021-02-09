@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<Nullable>enable</Nullable>
-    <DocumentationFile>Washcloth.xml</DocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
     <PackageReleaseNotes>Release Notes: https://github.com/swharden/Washcloth/releases </PackageReleaseNotes>
     <ApplicationIcon>icon.ico</ApplicationIcon>

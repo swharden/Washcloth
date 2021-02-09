@@ -3,7 +3,7 @@
 		<TargetFramework>netcoreapp2.1</TargetFramework>
     <NoWarn>1701;1702;1591</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>Washcloth_Testing.xml</DocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 	<ItemGroup>
