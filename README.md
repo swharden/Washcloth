@@ -41,6 +41,18 @@ Calculate area of a circle
 <returns>area in original units squared</returns>
 ```
 
+### Get Signatures with Washcloth
+
+```cs
+MethodInfo mi = typeof(MathClass).GetMethod("CircleArea");
+string signature = Washcloth.XmlDoc.GetSignature(mi);
+Console.WriteLine(signature);
+```
+
+```
+public double CircleArea(double radius = 123)
+```
+
 ## History
 
 Washcloth is derived from [Towel](https://github.com/ZacharyPatten/Towel) by [Zachary Patten](https://github.com/ZacharyPatten), .NET library intended to add core functionality and make advanced topics as clean and simple as possible. Towel has tools for working with data structures, algorithms, mathematics, metadata, extensions, console, and more. Towel states it favors newer coding practices over maintaining backwards compatibility. At the time of writing Towel can only be used in .NET 5 and newer environments. 

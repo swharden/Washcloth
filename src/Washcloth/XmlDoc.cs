@@ -17,16 +17,19 @@ namespace Washcloth
         public static string? GetXml(MemberInfo info) => Meta.GetDocumentation(info);
         public static string? GetXml(ParameterInfo info) => Meta.GetDocumentation(info);
         public static string? GetXml(MethodInfo info) => Meta.GetDocumentation(info);
+        public static string? GetXml(Type type) => Meta.GetDocumentation(type);
 
-        // TODO: this should be wrapped in <member> with the original name included
-        public static XDocument GetXDocument(ConstructorInfo info) => XDocument.Parse(Meta.GetDocumentation(info));
-        public static XDocument GetXDocument(PropertyInfo info) => XDocument.Parse(Meta.GetDocumentation(info));
-        public static XDocument GetXDocument(FieldInfo info) => XDocument.Parse(Meta.GetDocumentation(info));
-        public static XDocument GetXDocument(EventInfo info) => XDocument.Parse(Meta.GetDocumentation(info));
-        public static XDocument GetXDocument(MemberInfo info) => XDocument.Parse(Meta.GetDocumentation(info));
-        public static XDocument GetXDocument(ParameterInfo info) => XDocument.Parse(Meta.GetDocumentation(info));
-        public static XDocument GetXDocument(MethodInfo info) => XDocument.Parse(Meta.GetDocumentation(info));
 
+        /*
+        public static XDocument GetMember(ConstructorInfo info) => XDocument.Parse(Meta.GetDocumentation(info));
+        public static XDocument GetMember(PropertyInfo info) => XDocument.Parse(Meta.GetDocumentation(info));
+        public static XDocument GetMember(FieldInfo info) => XDocument.Parse(Meta.GetDocumentation(info));
+        public static XDocument GetMember(EventInfo info) => XDocument.Parse(Meta.GetDocumentation(info));
+        public static XDocument GetMember(MemberInfo info) => XDocument.Parse(Meta.GetDocumentation(info));
+        public static XDocument GetMember(ParameterInfo info) => XDocument.Parse(Meta.GetDocumentation(info));
+        public static XDocument GetMember(MethodInfo info) => XDocument.Parse(Meta.GetDocumentation(info));
+        public static XDocument GetMember(Type type) => XDocument.Parse(Meta.GetDocumentation(type));
+        */
 
         public static string? GetSummary(ConstructorInfo info) => GetSummary(GetXml(info));
         public static string? GetSummary(PropertyInfo info) => GetSummary(GetXml(info));
@@ -35,6 +38,7 @@ namespace Washcloth
         public static string? GetSummary(MemberInfo info) => GetSummary(GetXml(info));
         public static string? GetSummary(ParameterInfo info) => GetSummary(GetXml(info));
         public static string? GetSummary(MethodInfo info) => GetSummary(GetXml(info));
+        public static string? GetSummary(Type type) => GetSummary(GetXml(type));
 
         private static string? GetSummary(string? xml)
         {
@@ -57,5 +61,9 @@ namespace Washcloth
                 summary = summary.Replace("  ", " ");
             return summary.Trim();
         }
+
+        public static string GetSignature(MethodInfo info) => Signature.GetMethodSignature(info);
+
+        public static string GetSignature(Type type) => Signature.GetTypeSignature(type);
     }
 }

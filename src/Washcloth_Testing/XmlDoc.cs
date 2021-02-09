@@ -62,10 +62,28 @@ namespace Washcloth_Testing
         }
 
         [TestMethod]
-        public void Test_GetSummary_MatchesExpectation()
+        public void Test_GetSummary_Method()
         {
             MethodInfo mi = typeof(MathClass).GetMethod("CircleArea");
             Assert.AreEqual("Calculate area of a circle", Washcloth.XmlDoc.GetSummary(mi));
+        }
+
+        [TestMethod]
+        public void Test_GetSignature_Method()
+        {
+            MethodInfo mi = typeof(MathClass).GetMethod("CircleArea");
+            string knownSignature = "public double CircleArea(double radius = 123)";
+            string testSignature = Washcloth.XmlDoc.GetSignature(mi);
+            Assert.AreEqual(knownSignature, testSignature);
+        }
+
+        [TestMethod]
+        public void Test_GetSignature_Class()
+        {
+            Type type = typeof(MathClass);
+            string knownSignature = "Washcloth_Testing.MathClass";
+            string testSignature = Washcloth.XmlDoc.GetSignature(type);
+            Assert.AreEqual(knownSignature, testSignature);
         }
     }
 }
