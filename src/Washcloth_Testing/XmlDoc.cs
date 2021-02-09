@@ -60,5 +60,12 @@ namespace Washcloth_Testing
             Console.WriteLine(xml);
             Assert.IsNotNull(xml);
         }
+
+        [TestMethod]
+        public void Test_GetSummary_MatchesExpectation()
+        {
+            MethodInfo mi = typeof(MathClass).GetMethod("CircleArea");
+            Assert.AreEqual("Calculate area of a circle", Washcloth.XmlDoc.GetSummary(mi));
+        }
     }
 }
