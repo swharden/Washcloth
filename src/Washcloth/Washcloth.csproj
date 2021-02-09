@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<Nullable>enable</Nullable>
+    <DocumentationFile>Washcloth.xml</DocumentationFile>
+    <LangVersion>latest</LangVersion>
+    <PackageReleaseNotes>Release Notes: https://github.com/swharden/Washcloth/releases </PackageReleaseNotes>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <PackageIcon>icon.png</PackageIcon>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Washcloth reads XML code comments from inside running applications</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/swharden/Washcloth</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/swharden/Washcloth</RepositoryUrl>
+    <PackageTags>code comments documentation reflection xml towel</PackageTags>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Version>0.0.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+    <None Include="icon.ico" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  
+</Project>

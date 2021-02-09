@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Washcloth", "Washcloth\Washcloth.csproj", "{3BC2534F-3503-4245-B74B-928E005365A3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Washcloth_Testing", "Washcloth_Testing\Washcloth_Testing.csproj", "{5317BEE6-7EEF-4C45-ACE4-AAE6FAF37C74}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BC2534F-3503-4245-B74B-928E005365A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BC2534F-3503-4245-B74B-928E005365A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BC2534F-3503-4245-B74B-928E005365A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BC2534F-3503-4245-B74B-928E005365A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5317BEE6-7EEF-4C45-ACE4-AAE6FAF37C74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5317BEE6-7EEF-4C45-ACE4-AAE6FAF37C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5317BEE6-7EEF-4C45-ACE4-AAE6FAF37C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5317BEE6-7EEF-4C45-ACE4-AAE6FAF37C74}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32DFBC47-E6CE-459A-BA44-C2AA8FB8E97C}
+	EndGlobalSection
+EndGlobal
