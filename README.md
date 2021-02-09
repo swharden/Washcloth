@@ -49,19 +49,17 @@ Console.WriteLine(xml);
 </member>
 ```
 
-### Determine Signatures using C#
+## Similar Libraries
 
-```cs
-MethodInfo info = typeof(MathClass).GetMethod("CircleArea");
-string signature = Washcloth.XmlDoc.GetSignature(info);
-Console.WriteLine(signature);
-```
+### DocXml
 
-```
-public double CircleArea(double radius = 123)
-```
+[DocXml](https://github.com/loxsmoke/DocXml) is a small .net standard 2.0 library of helper classes and methods for compiler-generated XML documentation retrieval. Its API is very simple and easy to use with a predictive IDE. See [DocXml on NuGet](https://www.nuget.org/packages/LoxSmoke.DocXml)
 
-## History
+### NuDoq
+
+[NuDoq](https://github.com/devlooped/NuDoq) (previously NuDoc) is a standalone API to read and write .NET XML documentation files and optionally augment it with reflection information. According to the [releases](https://github.com/devlooped/NuDoq/releases) it was actively worked on around 2014, then rested quietly for a few years and new releases began in 2021. NuDoq looks quite extensive, but takes some studying before it can be used effectively. "Given the main API to traverse and act on the documentation elements is through the visitor pattern, the most important part of the API is knowing the types of nodes/elements in the visitable model." See [NuDoq on NuGet](https://www.nuget.org/packages/NuDoq)
+
+### Towel
 
 Washcloth is derived from [Towel](https://github.com/ZacharyPatten/Towel) by [Zachary Patten](https://github.com/ZacharyPatten), a .NET library intended to add core functionality and make advanced topics as clean and simple as possible. Towel has tools for working with data structures, algorithms, mathematics, metadata, extensions, console, and more. Towel favors newer coding practices over maintaining backwards compatibility, and at the time of writing Towel only supports .NET 5 and newer.
 
