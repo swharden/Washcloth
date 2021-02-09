@@ -12,7 +12,8 @@
     <Description>Washcloth reads XML code comments from inside running applications</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/swharden/Washcloth</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/swharden/Washcloth</RepositoryUrl>
+    <RepositoryUrl>https://github.com/swharden/Washcloth.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <PackageTags>code comments documentation reflection xml towel</PackageTags>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
