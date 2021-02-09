@@ -25,19 +25,17 @@ namespace Washcloth_Testing
     }
 
     [TestClass]
-    public class XmlDocumentation
+    public class XmlDoc
     {
         [TestMethod]
         public void Test_HasComments_MethodInfo()
         {
-            var docs = new Washcloth.XmlDocumentation("docFile.xml");
-
             foreach (MethodInfo mi in typeof(MathClass).GetMethods())
             {
                 Console.WriteLine(mi);
                 if (mi.Name == "CircleArea")
                 {
-                    string xml = docs.GetXml(mi);
+                    string xml = Washcloth.XmlDoc.GetXml(mi);
                     Console.WriteLine(xml);
                     Assert.IsNotNull(xml);
                 }
@@ -47,10 +45,8 @@ namespace Washcloth_Testing
         [TestMethod]
         public void Test_HasComments_FromType()
         {
-            var docs = new Washcloth.XmlDocumentation("docFile.xml");
-
             Type type = typeof(MathClass);
-            string xml = docs.GetXml(type);
+            string xml = Washcloth.XmlDoc.GetXml(type);
             Console.WriteLine(xml);
             Assert.IsNotNull(xml);
         }
@@ -58,11 +54,9 @@ namespace Washcloth_Testing
         //[TestMethod]
         public void Test_MathComments_FromMethod()
         {
-            var docs = new Washcloth.XmlDocumentation("docFile.xml");
-
             // WARNING: THIS DOES NOT WORK
             MethodInfo powerMethod = typeof(Math).GetMethod("Pow");
-            string xml = docs.GetXml(powerMethod);
+            string xml = Washcloth.XmlDoc.GetXml(powerMethod);
             Console.WriteLine(xml);
             Assert.IsNotNull(xml);
         }

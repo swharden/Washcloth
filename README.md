@@ -29,8 +29,8 @@ public class MathClass
 
 ```cs
 MethodInfo mi = typeof(MathClass).GetMethod("CircleArea");
-foreach (MethodInfo info in typeof(MathClass).GetMethods())
-    Console.WriteLine(docs.GetXml(info));
+foreach (MethodInfo info in typeof(MathClass).GetMethods()){}
+    Console.WriteLine(Washcloth.XmlDoc.GetXml(info));
 ```
 
 ```
