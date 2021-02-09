@@ -807,21 +807,21 @@ namespace Washcloth
         /// <param name="type">The type to get the XML documentation of.</param>
         /// <returns>The XML documentation on the type.</returns>
         /// <remarks>The XML documentation must be loaded into memory for this function to work.</remarks>
-        public static string? GetDocumentation(this Type type)
+        public static (string key, string? xml) GetDocumentation(this Type type)
         {
             _ = type ?? throw new ArgumentNullException(nameof(type));
             _ = type.FullName ?? throw new ArgumentException($"{nameof(type)}.{nameof(Type.FullName)} is null", nameof(type));
             LoadXmlDocumentation(type.Assembly);
             string key = "T:" + GetXmlNameTypeSegment(type.FullName);
             loadedXmlDocumentation.TryGet(key, out string? documentation);
-            return documentation;
+            return (key, documentation);
         }
 
         /// <summary>Gets the XML documentation on a method.</summary>
         /// <param name="methodInfo">The method to get the XML documentation of.</param>
         /// <returns>The XML documentation on the method.</returns>
         /// <remarks>The XML documentation must be loaded into memory for this function to work.</remarks>
-        public static string? GetDocumentation(this MethodInfo methodInfo)
+        public static (string key, string? xml) GetDocumentation(this MethodInfo methodInfo)
         {
             _ = methodInfo ?? throw new ArgumentNullException(nameof(methodInfo));
             _ = methodInfo.DeclaringType ?? throw new ArgumentException($"{nameof(methodInfo)}.{nameof(Type.DeclaringType)} is null", nameof(methodInfo));
@@ -832,7 +832,7 @@ namespace Washcloth
         /// <param name="constructorInfo">The constructor to get the XML documentation of.</param>
         /// <returns>The XML documentation on the constructor.</returns>
         /// <remarks>The XML documentation must be loaded into memory for this function to work.</remarks>
-        public static string? GetDocumentation(this ConstructorInfo constructorInfo)
+        public static (string key, string? xml) GetDocumentation(this ConstructorInfo constructorInfo)
         {
             _ = constructorInfo ?? throw new ArgumentNullException(nameof(constructorInfo));
             _ = constructorInfo.DeclaringType ?? throw new ArgumentException($"{nameof(constructorInfo)}.{nameof(Type.DeclaringType)} is null", nameof(constructorInfo));
@@ -843,7 +843,7 @@ namespace Washcloth
         /// <param name="propertyInfo">The property to get the XML documentation of.</param>
         /// <returns>The XML documentation on the property.</returns>
         /// <remarks>The XML documentation must be loaded into memory for this function to work.</remarks>
-        public static string? GetDocumentation(this PropertyInfo propertyInfo)
+        public static (string key, string? xml) GetDocumentation(this PropertyInfo propertyInfo)
         {
             _ = propertyInfo ?? throw new ArgumentNullException(nameof(propertyInfo));
             _ = propertyInfo.DeclaringType ?? throw new ArgumentException($"{nameof(propertyInfo)}.{nameof(Type.DeclaringType)} is null", nameof(propertyInfo));
@@ -851,14 +851,14 @@ namespace Washcloth
             LoadXmlDocumentation(propertyInfo.DeclaringType.Assembly);
             string key = "P:" + GetXmlNameTypeSegment(propertyInfo.DeclaringType.FullName) + "." + propertyInfo.Name;
             loadedXmlDocumentation.TryGet(key, out string? documentation);
-            return documentation;
+            return (key, documentation);
         }
 
         /// <summary>Gets the XML documentation on a field.</summary>
         /// <param name="fieldInfo">The field to get the XML documentation of.</param>
         /// <returns>The XML documentation on the field.</returns>
         /// <remarks>The XML documentation must be loaded into memory for this function to work.</remarks>
-        public static string? GetDocumentation(this FieldInfo fieldInfo)
+        public static (string key, string? xml) GetDocumentation(this FieldInfo fieldInfo)
         {
             _ = fieldInfo ?? throw new ArgumentNullException(nameof(fieldInfo));
             _ = fieldInfo.DeclaringType ?? throw new ArgumentException($"{nameof(fieldInfo)}.{nameof(Type.DeclaringType)} is null", nameof(fieldInfo));
@@ -866,14 +866,14 @@ namespace Washcloth
             LoadXmlDocumentation(fieldInfo.DeclaringType.Assembly);
             string key = "F:" + GetXmlNameTypeSegment(fieldInfo.DeclaringType.FullName) + "." + fieldInfo.Name;
             loadedXmlDocumentation.TryGet(key, out string? documentation);
-            return documentation;
+            return (key, documentation);
         }
 
         /// <summary>Gets the XML documentation on an event.</summary>
         /// <param name="eventInfo">The event to get the XML documentation of.</param>
         /// <returns>The XML documentation on the event.</returns>
         /// <remarks>The XML documentation must be loaded into memory for this function to work.</remarks>
-        public static string? GetDocumentation(this EventInfo eventInfo)
+        public static (string key, string? xml) GetDocumentation(this EventInfo eventInfo)
         {
             _ = eventInfo ?? throw new ArgumentNullException(nameof(eventInfo));
             _ = eventInfo.DeclaringType ?? throw new ArgumentException($"{nameof(eventInfo)}.{nameof(Type.DeclaringType)} is null", nameof(eventInfo));
@@ -881,14 +881,14 @@ namespace Washcloth
             LoadXmlDocumentation(eventInfo.DeclaringType.Assembly);
             string key = "E:" + GetXmlNameTypeSegment(eventInfo.DeclaringType.FullName) + "." + eventInfo.Name;
             loadedXmlDocumentation.TryGet(key, out string? documentation);
-            return documentation;
+            return (key, documentation);
         }
 
         /// <summary>Gets the XML documentation on a member.</summary>
         /// <param name="memberInfo">The member to get the XML documentation of.</param>
         /// <returns>The XML documentation on the member.</returns>
         /// <remarks>The XML documentation must be loaded into memory for this function to work.</remarks>
-        public static string? GetDocumentation(this MemberInfo memberInfo)
+        public static (string key, string? xml) GetDocumentation(this MemberInfo memberInfo)
         {
             switch (memberInfo)
             {
@@ -923,10 +923,10 @@ namespace Washcloth
         /// <summary>Gets the XML documentation for a parameter.</summary>
         /// <param name="parameterInfo">The parameter to get the XML documentation for.</param>
         /// <returns>The XML documenation of the parameter.</returns>
-        public static string? GetDocumentation(this ParameterInfo parameterInfo)
+        public static (string key, string? xml) GetDocumentation(this ParameterInfo parameterInfo)
         {
             _ = parameterInfo ?? throw new ArgumentNullException(nameof(parameterInfo));
-            string? memberDocumentation = parameterInfo.Member.GetDocumentation();
+            (string key, string? memberDocumentation) = parameterInfo.Member.GetDocumentation();
             if (memberDocumentation is not null)
             {
                 string regexPattern =
@@ -937,13 +937,13 @@ namespace Washcloth
                 Match match = Regex.Match(memberDocumentation, regexPattern);
                 if (match.Success)
                 {
-                    return match.Value;
+                    return (key, match.Value);
                 }
             }
-            return null;
+            return (key, null);
         }
 
-        internal static string? GetDocumentationMethodBase(MethodInfo? methodInfo = null, ConstructorInfo? constructorInfo = null)
+        internal static (string key, string? xml) GetDocumentationMethodBase(MethodInfo? methodInfo = null, ConstructorInfo? constructorInfo = null)
         {
             if (methodInfo is not null && constructorInfo is not null)
             {
@@ -1007,7 +1007,7 @@ namespace Washcloth
             }
 
             loadedXmlDocumentation.TryGet(key, out string? documentation);
-            return documentation;
+            return (key, documentation);
         }
 
         internal static string GetXmlDocumenationFormattedString(

@@ -35,7 +35,7 @@ namespace Washcloth_Testing
                 Console.WriteLine(mi);
                 if (mi.Name == "CircleArea")
                 {
-                    string xml = Washcloth.XmlDoc.GetXml(mi);
+                    string xml = Washcloth.XmlDoc.GetText(mi);
                     Console.WriteLine(xml);
                     Assert.IsNotNull(xml);
                 }
@@ -46,7 +46,7 @@ namespace Washcloth_Testing
         public void Test_HasComments_FromType()
         {
             Type type = typeof(MathClass);
-            string xml = Washcloth.XmlDoc.GetXml(type);
+            string xml = Washcloth.XmlDoc.GetText(type);
             Console.WriteLine(xml);
             Assert.IsNotNull(xml);
         }
@@ -56,7 +56,7 @@ namespace Washcloth_Testing
         {
             // WARNING: THIS DOES NOT WORK
             MethodInfo powerMethod = typeof(Math).GetMethod("Pow");
-            string xml = Washcloth.XmlDoc.GetXml(powerMethod);
+            string xml = Washcloth.XmlDoc.GetText(powerMethod);
             Console.WriteLine(xml);
             Assert.IsNotNull(xml);
         }
