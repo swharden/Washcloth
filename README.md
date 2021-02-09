@@ -9,6 +9,8 @@
 
 ## Quickstart
 
+Use `Washcloth.XmlDoc` to get documentation about a `Type` or information obtained from Reflection (`MethodInfo`, `FieldInfo`, `ConstructorInfo`, etc)
+
 ### Sample Code with XML Comments
 ```cs
 public class MathClass
@@ -28,24 +30,26 @@ public class MathClass
 ### Read XML Comments with Washcloth
 
 ```cs
-MethodInfo mi = typeof(MathClass).GetMethod("CircleArea");
-string xml = Washcloth.XmlDoc.GetXml(info);
+MethodInfo info = typeof(MathClass).GetMethod("CircleArea");
+XElement xml = Washcloth.XmlDoc.GetMember(info);
 Console.WriteLine(xml);
 ```
 
 ```
-<summary>
-Calculate area of a circle
-</summary>
-<param name="radius">distance from center to an edge</param>
-<returns>area in original units squared</returns>
+<member name="M:Washcloth_Testing.MathClass.CircleArea(System.Double)">
+  <summary>
+    Calculate area of a circle
+  </summary>
+  <param name="radius">distance from center to an edge</param>
+  <returns>area in original units squared</returns>
+</member>
 ```
 
 ### Get Signatures with Washcloth
 
 ```cs
-MethodInfo mi = typeof(MathClass).GetMethod("CircleArea");
-string signature = Washcloth.XmlDoc.GetSignature(mi);
+MethodInfo info = typeof(MathClass).GetMethod("CircleArea");
+string signature = Washcloth.XmlDoc.GetSignature(info);
 Console.WriteLine(signature);
 ```
 

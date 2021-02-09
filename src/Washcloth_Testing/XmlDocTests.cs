@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Xml.Linq;
+using Washcloth;
 
 namespace Washcloth_Testing
 {
@@ -25,28 +27,35 @@ namespace Washcloth_Testing
     }
 
     [TestClass]
-    public class XmlDoc
+    public class XmlDocTests
     {
         [TestMethod]
-        public void Test_HasComments_MethodInfo()
+        public void Test_Member_FromMethodInfo()
         {
             foreach (MethodInfo mi in typeof(MathClass).GetMethods())
             {
-                Console.WriteLine(mi);
                 if (mi.Name == "CircleArea")
                 {
-                    string xml = Washcloth.XmlDoc.GetText(mi);
-                    Console.WriteLine(xml);
-                    Assert.IsNotNull(xml);
+                    var methodXml = XmlDoc.GetMember(mi);
+                    Console.WriteLine(methodXml);
+                    Assert.IsNotNull(methodXml);
+
+                    foreach(ParameterInfo p in mi.GetParameters())
+                    {
+                        var paramXml = XmlDoc.GetParam(p);
+                        Console.WriteLine(p);
+                        Console.WriteLine(paramXml);
+                        Assert.IsNotNull(paramXml);
+                    }
                 }
             }
         }
 
         [TestMethod]
-        public void Test_HasComments_FromType()
+        public void Test_Member_FromType()
         {
             Type type = typeof(MathClass);
-            string xml = Washcloth.XmlDoc.GetText(type);
+            var xml = Washcloth.XmlDoc.GetMember(type);
             Console.WriteLine(xml);
             Assert.IsNotNull(xml);
         }
@@ -56,7 +65,7 @@ namespace Washcloth_Testing
         {
             // WARNING: THIS DOES NOT WORK
             MethodInfo powerMethod = typeof(Math).GetMethod("Pow");
-            string xml = Washcloth.XmlDoc.GetText(powerMethod);
+            XElement xml = XmlDoc.GetMember(powerMethod);
             Console.WriteLine(xml);
             Assert.IsNotNull(xml);
         }
@@ -65,7 +74,7 @@ namespace Washcloth_Testing
         public void Test_GetSummary_Method()
         {
             MethodInfo mi = typeof(MathClass).GetMethod("CircleArea");
-            Assert.AreEqual("Calculate area of a circle", Washcloth.XmlDoc.GetSummary(mi));
+            Assert.AreEqual("Calculate area of a circle", XmlDoc.GetSummary(mi));
         }
 
         [TestMethod]
@@ -73,7 +82,7 @@ namespace Washcloth_Testing
         {
             MethodInfo mi = typeof(MathClass).GetMethod("CircleArea");
             string knownSignature = "public double CircleArea(double radius = 123)";
-            string testSignature = Washcloth.XmlDoc.GetSignature(mi);
+            string testSignature = XmlDoc.GetSignature(mi);
             Assert.AreEqual(knownSignature, testSignature);
         }
 
@@ -82,7 +91,7 @@ namespace Washcloth_Testing
         {
             Type type = typeof(MathClass);
             string knownSignature = "Washcloth_Testing.MathClass";
-            string testSignature = Washcloth.XmlDoc.GetSignature(type);
+            string testSignature = XmlDoc.GetSignature(type);
             Assert.AreEqual(knownSignature, testSignature);
         }
     }

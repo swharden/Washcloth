@@ -8,45 +8,30 @@ namespace Washcloth
 {
     public class XmlDoc
     {
-        public static string? GetText(ConstructorInfo info) => Meta.GetDocumentation(info).xml;
-        public static string? GetText(PropertyInfo info) => Meta.GetDocumentation(info).xml;
-        public static string? GetText(FieldInfo info) => Meta.GetDocumentation(info).xml;
-        public static string? GetText(EventInfo info) => Meta.GetDocumentation(info).xml;
-        public static string? GetText(MemberInfo info) => Meta.GetDocumentation(info).xml;
-        public static string? GetText(ParameterInfo info) => Meta.GetDocumentation(info).xml;
-        public static string? GetText(MethodInfo info) => Meta.GetDocumentation(info).xml;
-        public static string? GetText(Type type) => Meta.GetDocumentation(type).xml;
+        public static XElement GetMember(Type type) => BuildMemberXml(Meta.GetDocumentation(type));
+        public static XElement GetMember(ConstructorInfo info) => BuildMemberXml(Meta.GetDocumentation(info));
+        public static XElement GetMember(PropertyInfo info) => BuildMemberXml(Meta.GetDocumentation(info));
+        public static XElement GetMember(FieldInfo info) => BuildMemberXml(Meta.GetDocumentation(info));
+        public static XElement GetMember(EventInfo info) => BuildMemberXml(Meta.GetDocumentation(info));
+        public static XElement GetMember(MemberInfo info) => BuildMemberXml(Meta.GetDocumentation(info));
+        public static XElement GetMember(MethodInfo info) => BuildMemberXml(Meta.GetDocumentation(info));
+        public static XElement GetParam(ParameterInfo info) => XElement.Parse(GetSummary(info));
 
-        public static XElement GetMember(ConstructorInfo info) => GetMemberElement(Meta.GetDocumentation(info));
-        public static XElement GetMember(PropertyInfo info) => GetMemberElement(Meta.GetDocumentation(info));
-        public static XElement GetMember(FieldInfo info) => GetMemberElement(Meta.GetDocumentation(info));
-        public static XElement GetMember(EventInfo info) => GetMemberElement(Meta.GetDocumentation(info));
-        public static XElement GetMember(MemberInfo info) => GetMemberElement(Meta.GetDocumentation(info));
-        public static XElement GetMember(ParameterInfo info) => GetMemberElement(Meta.GetDocumentation(info));
-        public static XElement GetMember(MethodInfo info) => GetMemberElement(Meta.GetDocumentation(info));
-        public static XElement GetMember(Type type) => GetMemberElement(Meta.GetDocumentation(type));
-
-        public static string? GetMemberName(ConstructorInfo info) => Meta.GetDocumentation(info).key;
-        public static string? GetMemberName(PropertyInfo info) => Meta.GetDocumentation(info).key;
-        public static string? GetMemberName(FieldInfo info) => Meta.GetDocumentation(info).key;
-        public static string? GetMemberName(EventInfo info) => Meta.GetDocumentation(info).key;
-        public static string? GetMemberName(MemberInfo info) => Meta.GetDocumentation(info).key;
-        public static string? GetMemberName(ParameterInfo info) => Meta.GetDocumentation(info).key;
-        public static string? GetMemberName(MethodInfo info) => Meta.GetDocumentation(info).key;
-        public static string? GetMemberName(Type type) => Meta.GetDocumentation(type).key;
-
+        public static string? GetSummary(Type type) => GetMemberSummary(GetMember(type));
         public static string? GetSummary(ConstructorInfo info) => GetMemberSummary(GetMember(info));
         public static string? GetSummary(PropertyInfo info) => GetMemberSummary(GetMember(info));
         public static string? GetSummary(FieldInfo info) => GetMemberSummary(GetMember(info));
         public static string? GetSummary(EventInfo info) => GetMemberSummary(GetMember(info));
         public static string? GetSummary(MemberInfo info) => GetMemberSummary(GetMember(info));
-        public static string? GetSummary(ParameterInfo info) => GetMemberSummary(GetMember(info));
         public static string? GetSummary(MethodInfo info) => GetMemberSummary(GetMember(info));
-        public static string? GetSummary(Type type) => GetMemberSummary(GetMember(type));
+        public static string? GetSummary(ParameterInfo info) => Meta.GetDocumentation(info).xml;
 
-        private static XElement GetMemberElement((string key, string? docXml) docs)
+        public static string GetSignature(Type type) => Signature.GetTypeSignature(type);
+        public static string GetSignature(MethodInfo info) => Signature.GetMethodSignature(info);
+
+        private static XElement BuildMemberXml((string key, string? xml) docs)
         {
-            string xml = docs.docXml ?? "";
+            string xml = docs.xml ?? "";
             string memberXml = $"<member name='{docs.key}'>{xml}</member>";
             return XElement.Parse(memberXml);
         }
@@ -64,9 +49,5 @@ namespace Washcloth
                 summary = summary.Replace("  ", " ");
             return summary.Trim();
         }
-
-        public static string GetSignature(MethodInfo info) => Signature.GetMethodSignature(info);
-
-        public static string GetSignature(Type type) => Signature.GetTypeSignature(type);
     }
 }
