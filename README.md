@@ -1,11 +1,8 @@
 # Washcloth ![](dev/icon/icon.png)
 
 [![Build Status](https://dev.azure.com/swharden/swharden/_apis/build/status/swharden.Washcloth?branchName=main)](https://dev.azure.com/swharden/swharden/_build/latest?definitionId=16&branchName=main)
-[![](https://img.shields.io/nuget/v/Washcloth?label=NuGet&logo=nuget)](https://www.nuget.org/packages/Washcloth/)
 
 **Washcloth is a .NET Standard library for reading XML code comments from inside running applications.** Comments in source code are used to display tooltip information in Visual Studio and can be automatically saved in XML files, but this documentation is not added into program assemblies so it is not available in compiled applications. Washcloth bridges this gap by reading the XML documentation file and combining its comments with program information found at runtime using reflection.
-
-**⚠️ Warning: Washcloth is early in development.** It is currently [major version zero](https://semver.org/#spec-item-4) and the public API should not be considered stable.
 
 ## Quickstart
 
